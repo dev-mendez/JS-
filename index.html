@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css" />
+    <title>JS+</title>
+  </head>
+  <body>
+    <!-- NavBar  -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand">Brand</a>
+      <button
+        class="navbar-toggler"
+        data-target="#my-nav"
+        data-toggle="collapse"
+        aria-controls="my-nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Item 1 <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link disabled"
+              href="#"
+              tabindex="-1"
+              aria-disabled="true"
+              >Item 2</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- NavBar finish -->
+
+    <br />
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1>How it work?</h1>
+          <ol>
+            <li style="list-style: square;">
+              Open your console,
+              <span
+                >right clicking in some place of this page and click on
+                inspect.</span
+              >
+            </li>
+            <li style="list-style: square;">
+              To see the console just click the tag console
+            </li>
+            <li style="list-style: square;">
+              To see exaplmes abaut something just click a button
+            </li>
+            <li style="list-style: square;">Tath's all</li>
+          </ol>
+        </div>
+        <!-- Content -->
+        <div class="col-lg-6">
+          <h1>Content</h1>
+
+          <div class="btn-group pt-2" role="group" aria-label="Button group">
+            <input
+              class="btn btn-success"
+              type="button"
+              name=""
+              id="call"
+              value="call"
+              onclick="visivilidad(this)"
+            />
+            <input
+              class="btn btn-info"
+              type="button"
+              name=""
+              id="aply"
+              value="apply"
+              onclick="visivilidad(this)"
+            />
+            <input
+              class="btn btn-dark"
+              type="button"
+              name=""
+              id="bind"
+              value="bind"
+              onclick="visivilidad(this)"
+            />
+            <input
+              class="btn btn-danger"
+              type="button"
+              name=""
+              id="erase"
+              value="erase"
+              onclick="hideAll()"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="hide" id="bindId">
+            <p>
+              Aquí no se trata de un metodo para invocar una función sino de un
+              metodo para hacer una copia de ella con el this que le definamos,
+              algo que nos será bastante util. La diferencia práctica con los
+              métodos anteriores, call y apply ejecutan la función y retornan un
+              resultado que podremos guardar, sin embargo con bind lo que se
+              guarda no es un resultado sino la propia función, y la podremos
+              ejecutar en el futuro.
+            </p>
+            <code>
+              <pre>
+                var persona = {
+                    nombre: "Javi",
+                    saludar: function(saludo, dia) {
+                      var nombre = "Julio";
+                      console.log(saludo + this.nombre + ", feliz " + dia + "!");
+                    }
+                  };
+                   
+                  var otraPersona = {
+                    nombre: "Óscar",
+                  };
+                   
+                   
+                  // CON CALL()
+                  var copia = persona.saludar.bind(persona1, "Hola ", "lunes"); 
+                  copia() //Hola Óscar, feliz lunes!
+                  persona1.nombre = "Luis";
+                  copia() //Hola Luis, feliz lunes!
+            </pre
+              >
+            </code>
+          </div>
+          <div class="hide" id="aplyId">
+            <p>
+              El método apply es prácticamente pero se diferencia en los
+              argumentos, mientras que en call pasamos los argumentos auxiliares
+              de la función como argumentos, en apply los pasamos todos juntos
+              en un array. Dicho de otra manera los parametros de call son de 1
+              ..n, y en apply son 1 o 2.
+            </p>
+            <code>
+              <pre>
+                var persona = {
+                    nombre: "Javi",
+                    saludar: function(saludo, dia) {
+                      var nombre = "Julio";
+                      console.log(saludo + this.nombre + ", feliz " + dia + "!");
+                    }
+                  };
+                   
+                  var persona1 = {
+                    nombre: "Óscar",
+                  };
+                  var persona2 = {
+                    nombre: "Sergio",
+                  };
+                  var persona3 = {
+                    nombre: "Marcos",
+                  }; 
+                   
+                  // CON CALL()
+                  persona.saludar.call(persona1, "Hola ", "lunes"); //Hola Óscar, feliz lunes!
+                  persona.saludar.call(persona2, "Buenas tardes ", "martes"); //Buenas tardes Sergio, feliz martes!
+                  persona.saludar.call(persona3, "Adiós ", "miercoles"); //Adiós Marcos, feliz miercoles!
+                   
+                  // CON APPLY()
+                  persona.saludar.apply(persona1, ["Hola ", "lunes"]); //Hola Óscar, feliz lunes!
+                  persona.saludar.apply(persona2, ["Buenas tardes ", "martes"]); //Buenas tardes Sergio, feliz martes!
+                  persona.saludar.apply(persona3, ["Adiós ", "miercoles"]); //Adiós Marcos, feliz miercoles!
+            </pre
+              >
+            </code>
+          </div>
+          <div class="hide" id="callId">
+            <p>
+              Esta función puede recibir multiples argumentos pero con la
+              peculiaridad de que el primero de ellos será el objeto de donde va
+              a extraer el ‘this’.
+              <code>
+                <pre>
+ var persona = {
+                nombre: "Javi",
+                saludar: function() {
+                  var nombre = "Julio";
+                  console.log("Hola " + this.nombre + "!");
+                }
+              };
+               
+              var persona1 = {
+                nombre: "Óscar",
+              };
+              var persona2 = {
+                nombre: "Sergio",
+              };
+              var persona3 = {
+                nombre: "Marcos",
+              }; 
+               
+              persona.saludar.call(persona1); //Hola Óscar!
+              persona.saludar.call(persona2); //Hola Sergio!
+              persona.saludar.call(persona3); //Hola Marcos!</pre
+                >
+              </code>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content  finish-->
+  </body>
+
+  <script src="app.js"></script>
+</html>

@@ -1,0 +1,11 @@
+body {
+  padding: 50px;
+}
+
+.hide {
+  display: none;
+}
+.visivle {
+  
+  visibility: visible;
+}
